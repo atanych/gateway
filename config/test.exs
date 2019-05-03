@@ -9,10 +9,10 @@ config :gateway, GatewayWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :ex_unit, assert_receive_timeout: 400
+
 # Configure your database
 config :gateway, Gateway.Repo,
-  username: "postgres",
-  password: "postgres",
   database: "gateway_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

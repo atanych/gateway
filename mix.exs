@@ -40,7 +40,11 @@ defmodule Gateway.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:ecto_enum, "~> 1.2.0"},
+      {:mock, "0.3.3", only: :test},
+      {:ex_machina, "~> 2.3", only: :test},
+      {:ext, git: "https://github.com/outcastby/ext.git"}
     ]
   end
 

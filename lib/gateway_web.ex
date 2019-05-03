@@ -20,7 +20,8 @@ defmodule GatewayWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: GatewayWeb
-
+      require IEx
+      require Logger
       import Plug.Conn
       import GatewayWeb.Gettext
       alias GatewayWeb.Router.Helpers, as: Routes

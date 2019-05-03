@@ -1,0 +1,17 @@
+defmodule WebhooksController do
+  use GatewayWeb, :controller
+
+  def inbox(conn, %{transport: transport} = params)
+      when transport in ["telegram", "whatsapp", "facebook", "livechat", "wechat", "instagram"] do
+    %{format: format, body: body, status: status, type: type} = response = Inbox.Process.call(params)
+
+    if type == :error, do: Logger.warn("Inbox request is not correct #{inspect(response)}.\n#{inspect(params)}")
+
+    conn = Plug.Conn.put_status(conn, status)
+    apply(Phoenix.Controller, format, [conn, body])
+  end
+
+  def outbox(_conn, _params) do
+    #    Outbox.Process.call(params)
+  end
+end

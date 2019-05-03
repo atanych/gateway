@@ -3,9 +3,12 @@ defmodule GatewayWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Plugs.Params
   end
 
-  scope "/api", GatewayWeb do
+  scope "/" do
     pipe_through :api
+    post "/webhooks/inbox/:transport", WebhooksController, :inbox
+    post "/webhooks/outbox", WebhooksController, :outbox
   end
 end

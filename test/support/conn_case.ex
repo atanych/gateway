@@ -20,7 +20,9 @@ defmodule GatewayWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias GatewayWeb.Router.Helpers, as: Routes
-
+      import Factories.Gateway.Base
+      require IEx
+      import Mock
       # The default endpoint for testing
       @endpoint GatewayWeb.Endpoint
     end
