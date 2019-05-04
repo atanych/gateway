@@ -23,7 +23,6 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
           message_id: 2,
           text: "hey"
         },
-        provider: "telegram",
         update_id: 159_136_107
       }
 
@@ -63,5 +62,20 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       assert unified_request.chat.id == "-352056954"
       assert unified_request.chat.type == "group"
     end
+  end
+
+  test ".get_attachments" do
+    request = %{
+      message: %{
+        photo: [
+          %{
+            file_id: "AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC"
+          }
+        ],
+      },
+    }
+
+    attachments = Transports.Telegram.UnifyInboxRequest.get_attachments(request)
+    assert attachments == ["AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC"]
   end
 end

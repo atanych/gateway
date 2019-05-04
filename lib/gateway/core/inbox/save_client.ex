@@ -28,10 +28,7 @@ defmodule Inbox.SaveClient do
         module -> module.call({context, request})
       end
 
-    {:ok, %{"path" => path}} =
-      Sdk.Storage.Client.upload(%Ext.Sdk.Request{payload: %{url: url, type: "avatar", company_id: device.company_id}})
-
-    path
+    Storage.PutAttachment.call(url, "avatar", device.company_id)
   end
 
   def put_avatar(request, avatar) do

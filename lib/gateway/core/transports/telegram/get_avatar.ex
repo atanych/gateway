@@ -2,10 +2,9 @@ defmodule Transports.Telegram.GetAvatar do
   use BaseCommand
 
   def call({%{device: %{settings: %{"token" => token}}}, request}) do
-    with file_id <- get_file_id(token, request),
-         file_path <- get_file_path(token, file_id) do
-      "#{Sdk.Telegram.Config.data.base_url}/file/bot#{token}/#{file_path}"
-    end
+    token
+    |> get_file_id(request)
+    |> Sdk.Telegram.Client.get_file_path_by_id(token)
   end
 
   def get_file_id(token, %{client: %{id: id}}) do
@@ -16,12 +15,5 @@ defmodule Transports.Telegram.GetAvatar do
     %{"file_id" => file_id} = List.last(photos)
 
     file_id
-  end
-
-  def get_file_path(token, file_id) do
-    request = %Ext.Sdk.Request{payload: %{file_id: file_id, limit: 1}, options: %{url_params: token}}
-
-    {:ok, %{"result" => %{"file_path" => file_path}}} = Sdk.Telegram.Client.get_file(request)
-    file_path
   end
 end

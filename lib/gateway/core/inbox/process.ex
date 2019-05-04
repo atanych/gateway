@@ -8,6 +8,7 @@ defmodule Inbox.Process do
       request
       |> Inbox.UnifyRequest.call()
       |> Inbox.Structs.Context.init()
+      |> Inbox.UploadAttachments.call()
       |> Inbox.SaveClient.call()
       |> Inbox.PerformEvent.call()
       |> Inbox.CreateEvent.call()
