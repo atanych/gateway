@@ -18,6 +18,7 @@ defmodule Device do
   schema "devices" do
     field(:transport, TransportEnum)
     field(:settings, :map)
+    field(:company_id, :string)
     field(:uniq_key, :string)
     timestamps()
   end

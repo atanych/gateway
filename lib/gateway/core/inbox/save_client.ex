@@ -21,11 +21,17 @@ defmodule Inbox.SaveClient do
   end
 
   def get_avatar({%{device: device} = context, %{transport: transport} = request}) do
-    case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.GetAvatar") do
-      # should be implemented
-      nil -> nil
-      module -> module.call({context, request})
-    end
+    url =
+      case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.GetAvatar") do
+        # should be implemented
+        nil -> nil
+        module -> module.call({context, request})
+      end
+
+    {:ok, %{"path" => path}} =
+      Sdk.Storage.Client.upload(%Ext.Sdk.Request{payload: %{url: url, type: "avatar", company_id: device.company_id}})
+
+    path
   end
 
   def put_avatar(request, avatar) do

@@ -117,5 +117,11 @@
     <orderEntry type="library" name="ex_machina" level="project" />
     <orderEntry type="library" name="meck" level="project" />
     <orderEntry type="library" name="markdown" level="project" />
+    <orderEntry type="library" name="arc" level="project" />
+    <orderEntry type="library" name="ex_aws" level="project" />
+    <orderEntry type="library" name="ex_aws_s3" level="project" />
+    <orderEntry type="library" name="sweet_xml" level="project" />
+    <orderEntry type="library" name="bypass" level="project" />
+    <orderEntry type="library" name="arc_ecto" level="project" />
   </component>
 </module>

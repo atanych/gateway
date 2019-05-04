@@ -4,7 +4,7 @@ defmodule Transports.Telegram.GetAvatar do
   def call({%{device: %{settings: %{"token" => token}}}, request}) do
     with file_id <- get_file_id(token, request),
          file_path <- get_file_path(token, file_id) do
-      "https://api.telegram.org/file/bot#{token}/#{file_path}"
+      "#{Sdk.Telegram.Config.data.base_url}/file/bot#{token}/#{file_path}"
     end
   end
 
