@@ -11,7 +11,7 @@ defmodule InboxEvent do
     field :external_id, :string
     field :extra, :map
     field :location, :map
-    field :attachments, {:array, :string}
+    field :attachments, {:array, :map}
     field :status, StatusEnum
     field :type, TypeEnum
 

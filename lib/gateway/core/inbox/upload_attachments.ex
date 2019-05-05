@@ -16,6 +16,8 @@ defmodule Inbox.UploadAttachments do
     end
   end
 
-  def put(%{device: %{company_id: company_id}}, attachment),
-    do: Storage.PutAttachment.call(attachment, "inbox", company_id)
+  def put(%{device: %{company_id: company_id}}, attachment) do
+    uploader_type = if attachment.type == "image", do: "message_image", else: "message_file"
+    %{attachment | path: Storage.PutAttachment.call(attachment, uploader_type, company_id)}
+  end
 end

@@ -28,7 +28,7 @@ defmodule Inbox.SaveClient do
         module -> module.call({context, request})
       end
 
-    Storage.PutAttachment.call(url, "avatar", device.company_id)
+    Storage.PutAttachment.call(%{url: url}, "avatar", device.company_id)
   end
 
   def put_avatar(request, avatar) do

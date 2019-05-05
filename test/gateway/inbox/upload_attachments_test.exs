@@ -13,11 +13,21 @@ defmodule Inbox.UploadAttachmentsTest do
         {_, %{message: message}} =
           Inbox.UploadAttachments.call(
             {%{device: %{company_id: "222"}},
-             %{transport: "livechat", message: %{id: "aaaa", attachments: ["file_id", "file_id1"]}}}
+             %{
+               transport: "livechat",
+               message: %{
+                 id: "aaaa",
+                 attachments: [%{id: "file_id", path: nil, type: "image"}, %{id: "file_id1", path: nil, type: "image"}]
+               }
+             }}
           )
 
         assert message.id == "aaaa"
-        assert message.attachments == ["/temp.original.jpg", "/temp.original.jpg"]
+
+        assert message.attachments == [
+                 %{id: "file_id", path: "/temp.original.jpg", type: "image"},
+                 %{id: "file_id1", path: "/temp.original.jpg", type: "image"}
+               ]
       end
     end
   end

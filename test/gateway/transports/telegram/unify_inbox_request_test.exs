@@ -64,18 +64,50 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
     end
   end
 
-  test ".get_attachments" do
-    request = %{
-      message: %{
-        photo: [
-          %{
-            file_id: "AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC"
-          }
-        ],
-      },
-    }
+  describe ".fill_attachments" do
+    test "photo" do
+      params = %{
+        message: %{
+          photo: [
+            %{
+              file_id: "AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC",
+              file_size: 3084,
+              height: 128,
+              width: 83
+            }
+          ]
+        }
+      }
 
-    attachments = Transports.Telegram.UnifyInboxRequest.get_attachments(request)
-    assert attachments == ["AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC"]
+      request = %Inbox.Structs.UnifiedRequest{}
+
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      assert attachment.id == "AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC"
+      assert attachment.size == 3084
+      assert attachment.height == 128
+      assert attachment.width == 83
+      assert attachment.type == "image"
+    end
+
+    test "document" do
+      params = %{
+        message: %{
+          document: %{
+            file_id: "BQADAgADCwMAAmafcUqF9-QvRj1ypwI",
+            file_name: "PGR ARCADE Configuration (22).xlsx",
+            file_size: 13966,
+            mime_type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          }
+        }
+      }
+
+      request = %Inbox.Structs.UnifiedRequest{}
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      assert attachment.id == "BQADAgADCwMAAmafcUqF9-QvRj1ypwI"
+      assert attachment.name == "PGR ARCADE Configuration (22).xlsx"
+      assert attachment.size == 13966
+      assert attachment.mime_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      assert attachment.type == "file"
+    end
   end
 end
