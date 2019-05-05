@@ -55,5 +55,37 @@ defmodule Transports.Telegram.UnifyInboxRequest do
     })
   end
 
+  def fill_attachments(request, %{message: %{voice: voice}} = params) do
+    Inbox.Structs.UnifiedRequest.add_attachment(request, %{
+      id: voice.file_id,
+      mime_type: voice[:mime_type],
+      duration: voice[:duration],
+      type: "file",
+      size: voice[:file_size]
+    })
+  end
+
+  def fill_attachments(request, %{message: %{video: video}} = params) do
+    Inbox.Structs.UnifiedRequest.add_attachment(request, %{
+      id: video.file_id,
+      mime_type: video[:mime_type],
+      duration: video[:duration],
+      type: "file",
+      width: video[:width],
+      height: video[:height],
+      size: video[:file_size]
+    })
+  end
+
+  def fill_attachments(request, %{message: %{sticker: sticker}} = params) do
+    Inbox.Structs.UnifiedRequest.add_attachment(request, %{
+      id: sticker.file_id,
+      width: sticker[:width],
+      height: sticker[:height],
+      type: "image",
+      size: sticker[:file_size]
+    })
+  end
+
   def fill_attachments(request, _), do: request
 end

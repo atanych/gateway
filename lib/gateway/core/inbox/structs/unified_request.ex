@@ -7,8 +7,19 @@ defmodule(Inbox.Structs.UnifiedRequest.Client,
 defmodule(Inbox.Structs.UnifiedRequest.Message, do: defstruct(id: nil, text: nil, attachments: [], location: nil))
 
 defmodule Inbox.Structs.UnifiedRequest.Attachment do
-  @derive {Jason.Encoder, only: [:name, :path, :size, :mime_type, :width, :height]}
-  defstruct(name: nil, path: nil, url: nil, id: nil, size: nil, mime_type: nil, width: nil, height: nil, type: "image")
+  @derive {Jason.Encoder, only: [:name, :path, :size, :mime_type, :width, :height, :duration]}
+  defstruct(
+    name: nil,
+    path: nil,
+    url: nil,
+    id: nil,
+    size: nil,
+    mime_type: nil,
+    width: nil,
+    height: nil,
+    type: "image",
+    duration: nil
+  )
 end
 
 defmodule Inbox.Structs.UnifiedRequest do

@@ -109,5 +109,86 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       assert attachment.mime_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       assert attachment.type == "file"
     end
+
+    test "voice" do
+      params = %{
+        message: %{
+          voice: %{
+            duration: 1,
+            file_id: "AwADAgADlAIAAmafeUplnjHF8lkdigI",
+            file_size: 8800,
+            mime_type: "audio/ogg"
+          }
+        }
+      }
+
+      request = %Inbox.Structs.UnifiedRequest{}
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      assert attachment.id == "AwADAgADlAIAAmafeUplnjHF8lkdigI"
+      assert attachment.size == 8800
+      assert attachment.duration == 1
+      assert attachment.mime_type == "audio/ogg"
+      assert attachment.type == "file"
+    end
+
+    test "sticker" do
+      params = %{
+        message: %{
+          sticker: %{
+            emoji: "👍",
+            file_id: "CAADAgADxwADXM77Avb7B0PihcnjAg",
+            file_size: 61790,
+            height: 512,
+            set_name: "DataMonsters",
+            thumb: %{
+              file_id: "AAQCABMRE7cNAARQ65OXhBcWuLtPAAIC",
+              file_size: 7946,
+              height: 128,
+              width: 128
+            },
+            width: 512
+          }
+        }
+      }
+
+      request = %Inbox.Structs.UnifiedRequest{}
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      assert attachment.id == "CAADAgADxwADXM77Avb7B0PihcnjAg"
+      assert attachment.size == 61790
+      assert attachment.height == 512
+      assert attachment.width == 512
+      assert attachment.type == "image"
+    end
+
+    test "video" do
+      params = %{
+        message: %{
+          video: %{
+            duration: 1,
+            file_id: "BAADAgADtQMAAo6QeUrnplWWHXqIigI",
+            file_size: 174_293,
+            height: 464,
+            mime_type: "video/mp4",
+            thumb: %{
+              file_id: "AAQCABNwaIQPAATC6d6sfi6VCQIBAAIC",
+              file_size: 12478,
+              height: 175,
+              width: 320
+            },
+            width: 848
+          }
+        }
+      }
+
+      request = %Inbox.Structs.UnifiedRequest{}
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      assert attachment.id == "BAADAgADtQMAAo6QeUrnplWWHXqIigI"
+      assert attachment.size == 174_293
+      assert attachment.height == 464
+      assert attachment.duration == 1
+      assert attachment.width == 848
+      assert attachment.mime_type == "video/mp4"
+      assert attachment.type == "file"
+    end
   end
 end
