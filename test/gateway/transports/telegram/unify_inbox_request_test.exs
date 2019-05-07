@@ -62,6 +62,69 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       assert unified_request.chat.id == "-352056954"
       assert unified_request.chat.type == "group"
     end
+
+    test "reply" do
+      request = %{
+        device_uniq_key: "aaa",
+        message: %{
+          chat: %{
+            first_name: "atanych",
+            id: 89_388_434,
+            type: "private",
+            username: "atanych"
+          },
+          date: 1_557_255_953,
+          from: %{
+            first_name: "atanych",
+            id: 89_388_434,
+            is_bot: false,
+            language_code: "en",
+            username: "atanych"
+          },
+          message_id: 134,
+          reply_to_message: %{
+            chat: %{
+              first_name: "atanych",
+              id: 89_388_434,
+              type: "private",
+              username: "atanych"
+            },
+            date: 1_557_254_339,
+            from: %{
+              first_name: "atanych",
+              id: 89_388_434,
+              is_bot: false,
+              language_code: "en",
+              username: "atanych"
+            },
+            message_id: 129,
+            photo: [
+              %{
+                file_id: "AgADAgAD0asxG5iZkUpH4JZf7JVZPlNLXw8ABJabEEq8cI49ZZUEAAEC",
+                file_size: 363,
+                height: 34,
+                width: 90
+              },
+              %{
+                file_id: "AgADAgAD0asxG5iZkUpH4JZf7JVZPlNLXw8ABJPgfqysdeexZJUEAAEC",
+                file_size: 558,
+                height: 66,
+                width: 176
+              }
+            ]
+          },
+          text: "222"
+        },
+        transport: "telegram",
+        update_id: 159_136_245
+      }
+
+      %{reply: reply} = Transports.Telegram.UnifyInboxRequest.call(request)
+      [attachment] = reply.message.attachments
+      assert reply.chat.id == "89388434"
+      assert reply.chat.type == "private"
+      assert attachment.id == "AgADAgAD0asxG5iZkUpH4JZf7JVZPlNLXw8ABJPgfqysdeexZJUEAAEC"
+    end
   end
 
   describe ".fill_attachments" do

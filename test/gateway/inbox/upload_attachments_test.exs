@@ -3,7 +3,9 @@ defmodule Inbox.UploadAttachmentsTest do
 
   describe ".call" do
     test "attachments are not filled" do
-      {_, %{message: message}} = Inbox.UploadAttachments.call({1, %{message: %{id: "aaaa", attachments: []}}})
+      {_, %{message: message}} =
+        Inbox.UploadAttachments.call({1, %{reply: nil, transport: "livechat", message: %{id: "aaaa", attachments: []}}})
+
       assert message.id == "aaaa"
       assert message.attachments == []
     end
@@ -14,6 +16,7 @@ defmodule Inbox.UploadAttachmentsTest do
           Inbox.UploadAttachments.call(
             {%{device: %{company_id: "222"}},
              %{
+               reply: nil,
                transport: "livechat",
                message: %{
                  id: "aaaa",

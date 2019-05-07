@@ -11,7 +11,7 @@ defmodule Inbox.Process do
       |> Inbox.UploadAttachments.call()
       |> Inbox.SaveClient.call()
       |> Inbox.PerformEvent.call()
-      |> Inbox.CreateEvent.call()
+      |> Inbox.SaveEvent.call()
       |> Inbox.BroadcastToVadesk.call()
       |> Inbox.PrepareResponse.call()
     else

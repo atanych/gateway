@@ -1,11 +1,10 @@
 defmodule Inbox.UploadAttachments do
   use BaseCommand
 
-  def call({context, %{message: %{attachments: []}} = request}), do: {context, request}
-
   def call({context, request}) do
     {context, %{message: %{attachments: attachments}}} = prepare({context, request})
     attachments = Enum.map(attachments, fn attachment -> put(context, attachment) end)
+    request = %{request | reply: upload_reply({context, request})}
     {context, %{request | message: %{request.message | attachments: attachments}}}
   end
 
@@ -20,4 +19,11 @@ defmodule Inbox.UploadAttachments do
     uploader_type = if attachment.type == "image", do: "message_image", else: "message_file"
     %{attachment | path: Storage.PutAttachment.call(attachment, uploader_type, company_id)}
   end
+
+  def upload_reply({context, %{reply: reply}}) when not is_nil(reply) do
+    {context, reply} = __MODULE__.call({context, reply})
+    reply
+  end
+
+  def upload_reply({_context, %{reply: reply}}), do: reply
 end

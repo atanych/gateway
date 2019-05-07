@@ -7,21 +7,20 @@ defmodule InboxEvent do
   schema "inbox_events" do
     belongs_to :device, Device
     belongs_to :client, Client
-    field :text, :string
     field :external_id, :string
-    field :extra, :map
-    field :location, :map
-    field :attachments, {:array, :map}
+    field :data, :map
     field :status, StatusEnum
     field :type, TypeEnum
 
     timestamps()
   end
 
-  def changeset(struct, params \\ %{}) do
-    params = params ||| %{external_id: Ext.Utils.Base.to_str(params[:external_id])}
+  def changeset(struct, %{external_id: external_id} = params) when is_number(external_id) do
+    changeset(struct, params ||| %{external_id: Ext.Utils.Base.to_str(params[:external_id])})
+  end
 
+  def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:text, :external_id, :extra, :location, :attachments, :status, :type, :device_id, :client_id])
+    |> cast(params, [:external_id, :data, :status, :type, :device_id, :client_id])
   end
 end
