@@ -8,6 +8,7 @@ defmodule GatewayWeb.Router do
 
   scope "/" do
     pipe_through :api
+    post "/webhooks/inbox/:transport/:device_uniq_key", WebhooksController, :inbox
     post "/webhooks/inbox/:transport", WebhooksController, :inbox
     post "/webhooks/outbox", WebhooksController, :outbox
   end

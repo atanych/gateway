@@ -6,7 +6,7 @@ end
 
 defmodule Inbox.Structs.UnifiedRequest.Client do
   @derive Jason.Encoder
-  defstruct(id: nil, uniq_key: nil, nickname: nil, avatar: nil, lang: nil)
+  defstruct(id: nil, uniq_key: nil, nickname: nil, avatar: nil, lang: nil, country: nil, phone: nil)
 end
 
 defmodule Inbox.Structs.UnifiedRequest.Message do
@@ -38,15 +38,21 @@ defmodule Inbox.Structs.UnifiedRequest do
             event_type: nil,
             transport: nil,
             device_uniq_key: nil,
-            reply: nil
+            reply: nil,
+            contact: nil
 
-  def init(%{chat: chat, client: client, message: message} = params) do
-    struct(__MODULE__, %{
-      params
-      | chat: struct(Inbox.Structs.UnifiedRequest.Chat, chat),
-        message: struct(Inbox.Structs.UnifiedRequest.Message, message),
-        client: struct(Inbox.Structs.UnifiedRequest.Client, client)
-    })
+  import Ext.Utils.Map
+
+  def init(params) do
+    struct(
+      __MODULE__,
+      params |||
+        %{
+          chat: struct(Inbox.Structs.UnifiedRequest.Chat, params[:chat] || %{}),
+          message: struct(Inbox.Structs.UnifiedRequest.Message, params[:message] || %{}),
+          client: struct(Inbox.Structs.UnifiedRequest.Client, params[:client] || %{})
+        }
+    )
   end
 
   def add_attachment(request, attachment) do
@@ -57,5 +63,9 @@ defmodule Inbox.Structs.UnifiedRequest do
           | attachments: request.message.attachments ++ [struct(Inbox.Structs.UnifiedRequest.Attachment, attachment)]
         }
     }
+  end
+
+  def add_contact(request, contact) do
+    %{request | contact: struct(Inbox.Structs.UnifiedRequest.Client, contact)}
   end
 end

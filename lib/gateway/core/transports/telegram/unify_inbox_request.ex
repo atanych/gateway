@@ -8,6 +8,7 @@ defmodule Transports.Telegram.UnifyInboxRequest do
     params
     |> init_request()
     |> fill_attachments(params)
+    |> fill_location(params)
     |> fill_reply(params)
   end
 
@@ -37,6 +38,12 @@ defmodule Transports.Telegram.UnifyInboxRequest do
 
   def get_event_type(%{message: %{edit_date: edit_date}}), do: "update_inbox"
   def get_event_type(_), do: "send_inbox"
+
+  def fill_location(request, %{message: %{location: %{latitude: latitude, longitude: longitude}}}) do
+    %{request | message: %{request.message | location: %{lat: latitude, lon: longitude}}}
+  end
+
+  def fill_location(request, _), do: request
 
   def fill_attachments(request, %{message: %{photo: photos}}) when is_list(photos) do
     photo = List.last(photos)

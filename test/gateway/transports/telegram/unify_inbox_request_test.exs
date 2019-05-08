@@ -63,6 +63,42 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       assert unified_request.chat.type == "group"
     end
 
+    test "location" do
+      request = %{
+        device_uniq_key: "aaa",
+        message: %{
+          chat: %{first_name: "atanych", id: 89_388_434, type: "private", username: "atanych"},
+          date: 1_557_268_864,
+          from: %{first_name: "atanych", id: 89_388_434, is_bot: false, language_code: "en", username: "atanych"},
+          location: %{latitude: 53.884385, longitude: 27.432413},
+          message_id: 144
+        },
+        transport: "telegram",
+        update_id: 159_136_255
+      }
+
+      %{message: %{location: location}} = Transports.Telegram.UnifyInboxRequest.call(request)
+      assert location == %{lat: 53.884385, lon: 27.432413}
+    end
+
+#    test "contact" do
+#      request = %{
+#        device_uniq_key: "aaa",
+#        message: %{
+#          chat: %{first_name: "atanych", id: 89_388_434, type: "private", username: "atanych"},
+#          contact: %{first_name: "Августо", phone_number: "+375295760070", user_id: 413_720_589},
+#          date: 1_557_269_877,
+#          from: %{first_name: "atanych", id: 89_388_434, is_bot: false, language_code: "en", username: "atanych"},
+#          message_id: 145
+#        },
+#        transport: "telegram",
+#        update_id: 159_136_256
+#      }
+#
+#      %{message: %{location: location}} = Transports.Telegram.UnifyInboxRequest.call(request)
+#      assert location == %{lat: 53.884385, lon: 27.432413}
+#    end
+
     test "reply" do
       request = %{
         device_uniq_key: "aaa",

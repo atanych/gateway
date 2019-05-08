@@ -20,15 +20,17 @@ defmodule Inbox.SaveClient do
     {context, request}
   end
 
-  def get_avatar({%{device: device} = context, %{transport: transport} = request}) do
+  def get_avatar({%{device: device} = context, %{transport: transport, client: client} = request}) do
     url =
       case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.GetAvatar") do
-        # should be implemented
-        nil -> nil
+        nil -> client.avatar
         module -> module.call({context, request})
       end
 
-    Storage.PutAttachment.call(%{url: url}, "avatar", device.company_id)
+    case url do
+      nil -> nil
+      url -> Storage.PutAttachment.call(%{url: url}, "avatar", device.company_id)
+    end
   end
 
   def put_avatar(request, avatar) do

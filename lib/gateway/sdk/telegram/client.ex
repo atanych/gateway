@@ -1,4 +1,5 @@
 defmodule Sdk.Telegram.Client do
+  # https://core.telegram.org/bots/api#available-methods
   use Ext.Sdk.BaseClient, endpoints: Map.keys(Sdk.Telegram.Config.data().endpoints)
   require IEx
   require Logger
