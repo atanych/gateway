@@ -42,6 +42,8 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
     assert unified_request.message.id == 5_306_661_646_841_952_248
     assert unified_request.client.avatar == "http://dl-media.viber.com/1/share/2/long/bots/generic-avatar%402x.png"
     assert unified_request.client.lang == "en"
+    assert unified_request.client.id == "wAH/iUrD+rHAocQ8VQQhUg=="
+    assert unified_request.client.uniq_key == "vbp/wAH/iUrD+rHAocQ8VQQhUg=="
     assert unified_request.client.nickname == "Subscriber"
   end
 
@@ -147,8 +149,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       event: "message",
       message: %{
         contact: %{
-          avatar:
-            "https://media-direct.cdn.viber.com/downlo",
+          avatar: "https://media-direct.cdn.viber.com/downlo",
           name: "FFF",
           phone_number: "+3756664335"
         },

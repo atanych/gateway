@@ -31,9 +31,7 @@ defmodule Transports.Telegram.UnifyInboxRequest do
         text: message[:text] || message[:caption],
         location: message[:location]
       },
-      event_type: get_event_type(params),
-      transport: transport,
-      device_uniq_key: params[:device_uniq_key]
+      event_type: get_event_type(params)
     })
   end
 

@@ -9,7 +9,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequest do
       client: %{
         id: sender[:id],
         avatar: sender[:avatar],
-        uniq_key: "vp/#{sender[:id]}",
+        uniq_key: "vbp/#{sender[:id]}",
         lang: sender[:language],
         country: sender[:country],
         nickname: sender[:name]

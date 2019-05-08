@@ -6,9 +6,9 @@ defmodule Transports.ViberPublic.Subscribe do
 
     request = %Ext.Sdk.Request{
       payload: %{
-        url: "#{System.get_env()["ROOT_URL"]}/webhooks/inbox/viber_public/#{uniq_key}",
-#        send_name: true,
-#        send_photo: true
+        url: "#{System.get_env()["ROOT_URL"]}/webhooks/inbox/viber_public/#{uniq_key}"
+        #        send_name: true,
+        #        send_photo: true
       },
       headers: ["X-Viber-Auth-Token": token]
     }
