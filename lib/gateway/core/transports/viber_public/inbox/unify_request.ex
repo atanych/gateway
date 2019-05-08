@@ -1,4 +1,4 @@
-defmodule Transports.ViberPublic.UnifyInboxRequest do
+defmodule Transports.ViberPublic.Inbox.UnifyRequest do
   use BaseCommand
 
   def call(%{event: "webhook"}), do: Inbox.Structs.UnifiedRequest.init(%{event_type: "confirm_hook"})

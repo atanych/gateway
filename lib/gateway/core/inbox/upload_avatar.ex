@@ -9,7 +9,7 @@ defmodule Inbox.UploadAvatar do
   end
 
   def get_avatar({context, client_request}, transport) do
-    case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.GetAvatar") do
+    case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.Inbox.GetAvatar") do
       nil -> %{url: client_request.avatar}
       module -> %{url: module.call({context, client_request})}
     end

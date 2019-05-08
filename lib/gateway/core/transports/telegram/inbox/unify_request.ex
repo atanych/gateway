@@ -1,4 +1,4 @@
-defmodule Transports.Telegram.UnifyInboxRequest do
+defmodule Transports.Telegram.Inbox.UnifyRequest do
   use BaseCommand
 
   def call(%{edited_message: edited_message} = params) when not is_nil(edited_message),

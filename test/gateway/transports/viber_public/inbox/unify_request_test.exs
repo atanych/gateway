@@ -1,4 +1,4 @@
-defmodule Transports.ViberPublic.UnifyInboxRequestTest do
+defmodule Transports.ViberPublic.Inbox.UnifyRequestTest do
   use GatewayWeb.ConnCase
 
   test "webhook" do
@@ -11,7 +11,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       transport: "viber_public"
     }
 
-    unified_request = Transports.ViberPublic.UnifyInboxRequest.call(request)
+    unified_request = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
     assert unified_request.event_type == "confirm_hook"
   end
 
@@ -36,7 +36,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       transport: "viber_public"
     }
 
-    unified_request = Transports.ViberPublic.UnifyInboxRequest.call(request)
+    unified_request = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
     assert unified_request.event_type == "send_inbox"
     assert unified_request.message.text == "S"
     assert unified_request.message.id == 5_306_661_646_841_952_248
@@ -75,7 +75,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       transport: "viber_public"
     }
 
-    %{message: %{attachments: [attachment]}} = Transports.ViberPublic.UnifyInboxRequest.call(request)
+    %{message: %{attachments: [attachment]}} = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
     assert attachment.url == "https://dl-media.viber.com/4/media/2/short/any/sig/image/0x0"
     assert attachment.name == "1557267880757450.jpg"
     assert attachment.type == "image"
@@ -102,7 +102,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       transport: "viber_public"
     }
 
-    %{message: message} = Transports.ViberPublic.UnifyInboxRequest.call(request)
+    %{message: message} = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
     assert message.location == %{lat: 53.8844239, lon: 27.4325049}
   end
 
@@ -136,7 +136,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       transport: "viber_public"
     }
 
-    %{message: %{attachments: [attachment]}} = Transports.ViberPublic.UnifyInboxRequest.call(request)
+    %{message: %{attachments: [attachment]}} = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
     assert attachment.url == "https://dl-media.viber.com/5/medi"
     assert attachment.name == "1557269405502533.mp4"
     assert attachment.type == "file"
@@ -170,7 +170,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequestTest do
       transport: "viber_public"
     }
 
-    %{contact: contact} = Transports.ViberPublic.UnifyInboxRequest.call(request)
+    %{contact: contact} = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
     assert contact.avatar == "https://media-direct.cdn.viber.com/downlo"
     assert contact.phone == "+3756664335"
     assert contact.nickname == "FFF"

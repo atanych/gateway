@@ -1,4 +1,4 @@
-defmodule Transports.Telegram.UploadAttachments do
+defmodule Transports.Telegram.Inbox.UploadAttachments do
   use BaseCommand
 
   def call({%{device: %{settings: %{"token" => token}}} = context, %{message: %{attachments: [attachment]}} = request}) do

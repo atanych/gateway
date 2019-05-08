@@ -1,4 +1,4 @@
-defmodule Transports.Telegram.GetAvatar do
+defmodule Transports.Telegram.Inbox.GetAvatar do
   use BaseCommand
 
   def call({%{device: %{settings: %{"token" => token}}}, request}) do

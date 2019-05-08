@@ -28,7 +28,7 @@ defmodule Inbox.UnifyRequestTest do
   end
 
   test "call" do
-    with_mock Transports.Telegram.UnifyInboxRequest, call: fn _ -> %Inbox.Structs.UnifiedRequest{} end do
+    with_mock Transports.Telegram.Inbox.UnifyRequest, call: fn _ -> %Inbox.Structs.UnifiedRequest{} end do
       request = Inbox.UnifyRequest.call(%{transport: "telegram", device_uniq_key: "bbb"})
       assert request.device_uniq_key == "bbb"
       assert request.transport == "telegram"

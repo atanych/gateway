@@ -10,7 +10,7 @@ defmodule Inbox.SaveClientTest do
     end
 
     test "client does not exist" do
-      with_mock Transports.Telegram.GetAvatar, call: fn _ -> "https://images.pexels.com/temp" end do
+      with_mock Transports.Telegram.Inbox.GetAvatar, call: fn _ -> "https://images.pexels.com/temp" end do
         with_mock Sdk.Storage.Client, upload: fn _ -> {:ok, %{"path" => "/temp.original.jpg"}} end do
           context = %{client: nil, device: insert(:device)}
 

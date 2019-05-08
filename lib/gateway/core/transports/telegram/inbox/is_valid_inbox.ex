@@ -1,4 +1,4 @@
-defmodule Transports.Telegram.IsValidInbox do
+defmodule Transports.Telegram.Inbox.IsValidInbox do
   use BaseCommand
 
   def call(%{message: %{location: location}}) when not is_nil(location), do: true

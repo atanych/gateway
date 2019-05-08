@@ -1,4 +1,4 @@
-defmodule Transports.Telegram.UnifyInboxRequestTest do
+defmodule Transports.Telegram.Inbox.UnifyRequestTest do
   use GatewayWeb.ConnCase
 
   describe "call" do
@@ -26,7 +26,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
         update_id: 159_136_107
       }
 
-      unified_request = Transports.Telegram.UnifyInboxRequest.call(request)
+      unified_request = Transports.Telegram.Inbox.UnifyRequest.call(request)
       assert unified_request.event_type == "send_inbox"
     end
 
@@ -56,7 +56,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
         update_id: 159_136_130
       }
 
-      unified_request = Transports.Telegram.UnifyInboxRequest.call(request)
+      unified_request = Transports.Telegram.Inbox.UnifyRequest.call(request)
       assert unified_request.event_type == "update_inbox"
       assert unified_request.message.text == "caption"
       assert unified_request.chat.id == "-352056954"
@@ -77,7 +77,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
         update_id: 159_136_255
       }
 
-      %{message: %{location: location}} = Transports.Telegram.UnifyInboxRequest.call(request)
+      %{message: %{location: location}} = Transports.Telegram.Inbox.UnifyRequest.call(request)
       assert location == %{lat: 53.884385, lon: 27.432413}
     end
 
@@ -95,7 +95,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
         update_id: 159_136_256
       }
 
-      %{contact: contact} = Transports.Telegram.UnifyInboxRequest.call(request)
+      %{contact: contact} = Transports.Telegram.Inbox.UnifyRequest.call(request)
       assert contact.nickname == "AAA"
       assert contact.phone == "+375295563423"
       assert contact.id == 413_720_323
@@ -157,7 +157,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
         update_id: 159_136_245
       }
 
-      %{reply: reply} = Transports.Telegram.UnifyInboxRequest.call(request)
+      %{reply: reply} = Transports.Telegram.Inbox.UnifyRequest.call(request)
       [attachment] = reply.message.attachments
       assert reply.chat.id == "89388434"
       assert reply.chat.type == "private"
@@ -182,7 +182,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
 
       request = %Inbox.Structs.UnifiedRequest{}
 
-      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.Inbox.UnifyRequest.fill_attachments(request, params)
       assert attachment.id == "AgADAgADtqoxG6WtaUq6bcNCH2Kp1pWqUQ8ABOKOyf0XowF4tOcCAAEC"
       assert attachment.size == 3084
       assert attachment.height == 128
@@ -203,7 +203,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       }
 
       request = %Inbox.Structs.UnifiedRequest{}
-      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.Inbox.UnifyRequest.fill_attachments(request, params)
       assert attachment.id == "BQADAgADCwMAAmafcUqF9-QvRj1ypwI"
       assert attachment.name == "PGR ARCADE Configuration (22).xlsx"
       assert attachment.size == 13966
@@ -224,7 +224,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       }
 
       request = %Inbox.Structs.UnifiedRequest{}
-      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.Inbox.UnifyRequest.fill_attachments(request, params)
       assert attachment.id == "AwADAgADlAIAAmafeUplnjHF8lkdigI"
       assert attachment.size == 8800
       assert attachment.duration == 1
@@ -253,7 +253,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       }
 
       request = %Inbox.Structs.UnifiedRequest{}
-      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.Inbox.UnifyRequest.fill_attachments(request, params)
       assert attachment.id == "CAADAgADxwADXM77Avb7B0PihcnjAg"
       assert attachment.size == 61790
       assert attachment.height == 512
@@ -282,7 +282,7 @@ defmodule Transports.Telegram.UnifyInboxRequestTest do
       }
 
       request = %Inbox.Structs.UnifiedRequest{}
-      %{message: %{attachments: [attachment]}} = Transports.Telegram.UnifyInboxRequest.fill_attachments(request, params)
+      %{message: %{attachments: [attachment]}} = Transports.Telegram.Inbox.UnifyRequest.fill_attachments(request, params)
       assert attachment.id == "BAADAgADtQMAAo6QeUrnplWWHXqIigI"
       assert attachment.size == 174_293
       assert attachment.height == 464

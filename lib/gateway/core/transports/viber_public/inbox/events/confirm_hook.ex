@@ -1,4 +1,4 @@
-defmodule Transports.ViberPublic.Events.ConfirmHook do
+defmodule Transports.ViberPublic.Inbox.Events.ConfirmHook do
   use BaseCommand
 
   def call({context, %{transport: transport} = params}) do

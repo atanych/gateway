@@ -1,4 +1,4 @@
-defmodule Transports.ViberPublic.IsValidInbox do
+defmodule Transports.ViberPublic.Inbox.IsValidInbox do
   use BaseCommand
 
   def call(%{event: "webhook"}), do: true
