@@ -8,6 +8,7 @@ defmodule Transports.Telegram.UnifyInboxRequest do
     params
     |> init_request()
     |> fill_attachments(params)
+    |> fill_contact(params)
     |> fill_location(params)
     |> fill_reply(params)
   end
@@ -44,6 +45,16 @@ defmodule Transports.Telegram.UnifyInboxRequest do
   end
 
   def fill_location(request, _), do: request
+
+  def fill_contact(request, %{message: %{contact: contact}}) when not is_nil(contact) do
+    Inbox.Structs.UnifiedRequest.add_contact(request, %{
+      id: contact[:user_id],
+      nickname: contact[:first_name],
+      phone: contact[:phone_number]
+    })
+  end
+
+  def fill_contact(request, _), do: request
 
   def fill_attachments(request, %{message: %{photo: photos}}) when is_list(photos) do
     photo = List.last(photos)
