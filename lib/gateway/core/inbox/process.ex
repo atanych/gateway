@@ -10,6 +10,7 @@ defmodule Inbox.Process do
       |> Inbox.Structs.Context.init()
       |> Inbox.UploadAttachments.call()
       |> Inbox.SaveClient.call()
+      |> Inbox.SaveContact.call()
       |> Inbox.PerformEvent.call()
       |> Inbox.SaveEvent.call()
       |> Inbox.BroadcastToVadesk.call()

@@ -1,39 +1,23 @@
 defmodule Inbox.SaveClient do
   use BaseCommand
 
-  def call({%{client: nil} = context, request}) do
+  def call({%{client: nil} = context, %{client: client, transport: transport} = request}) do
+    request = %{request | client: Inbox.UploadAvatar.call({context, client}, transport)}
     # fetch avatar
     client =
       Gateway.Repo.save!(%Client{}, %{
-        lang: request.client.lang,
-        nickname: request.client.nickname,
-        uniq_key: request.client.uniq_key,
-        external_id: request.client.id,
-        avatar: get_avatar({context, request})
+        lang: client.lang,
+        nickname: client.nickname,
+        uniq_key: client.uniq_key,
+        external_id: client.id,
+        avatar: request.client.avatar
       })
 
-    {%{context | client: client}, put_avatar(request, client.avatar)}
+    {%{context | client: client}, request}
   end
 
   def call({%{client: client} = context, request}) do
-    request = put_avatar(request, client.avatar)
+    request = %{request | client: %{request.client | avatar: client.avatar}}
     {context, request}
-  end
-
-  def get_avatar({%{device: device} = context, %{transport: transport, client: client} = request}) do
-    url =
-      case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.GetAvatar") do
-        nil -> client.avatar
-        module -> module.call({context, request})
-      end
-
-    case url do
-      nil -> nil
-      url -> Storage.PutAttachment.call(%{url: url}, "avatar", device.company_id)
-    end
-  end
-
-  def put_avatar(request, avatar) do
-    %{request | client: %{request.client | avatar: avatar}}
   end
 end

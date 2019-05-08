@@ -41,6 +41,7 @@ defmodule Transports.ViberPublic.UnifyInboxRequest do
     Inbox.Structs.UnifiedRequest.add_attachment(request, %{
       url: media,
       name: message[:file_name],
+      size: message[:size],
       type: if(type in ["picture", "sticker"], do: "image", else: "file")
     })
   end

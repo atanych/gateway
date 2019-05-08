@@ -3,17 +3,15 @@ defmodule Inbox.SaveClientTest do
 
   describe ".call" do
     test "client exists" do
-      context = %{client: insert(:client, avatar: "http://tmp.jpg")}
+      context = %{client: insert(:client, avatar: "/uploads/tmp.jpg")}
 
       {_context, request} = Inbox.SaveClient.call({context, %{client: %{avatar: nil}}})
-      assert request.client.avatar == "http://tmp.jpg"
+      assert request.client.avatar == "/uploads/tmp.jpg"
     end
 
     test "client does not exist" do
-      with_mock Transports.Telegram.GetAvatar,
-        call: fn _ -> "https://images.pexels.com/temp" end do
-        with_mock Sdk.Storage.Client,
-          upload: fn _ -> {:ok, %{"path" => "/temp.original.jpg"}} end do
+      with_mock Transports.Telegram.GetAvatar, call: fn _ -> "https://images.pexels.com/temp" end do
+        with_mock Sdk.Storage.Client, upload: fn _ -> {:ok, %{"path" => "/temp.original.jpg"}} end do
           context = %{client: nil, device: insert(:device)}
 
           request = %{
