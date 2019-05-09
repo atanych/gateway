@@ -19,12 +19,24 @@ config :gateway, GatewayWeb.Endpoint,
 
 # Configures Elixir's Logger
 config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  format: "$date $time $metadata[$level] $message\n",
+  metadata: [:request_id, :transport]
+
+# Use custom reporter because errors not sending in rollbar (see RollbaxReporter method for "Common error")
+config :rollbax,
+       access_token: "f4207c6bf02b4f57b5eae8141cab49c3",
+       environment: System.get_env("MIX_ENV"),
+       enabled: System.get_env("ENABLE_ROLLBAR") == "true",
+         #       reporters: [Rollbar.Reporter], # For use in rollbax custom reporter
+       enable_crash_reports: true
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+import_config "logger.exs"
+
+case Mix.env() do
+  :test -> import_config "test.exs"
+  :dev -> import_config "dev.exs"
+  _ -> import_config "server.exs"
+end

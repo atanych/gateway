@@ -44,6 +44,8 @@ defmodule Gateway.MixProject do
       {:ecto_enum, "~> 1.2.0"},
       {:mock, "0.3.3", only: :test},
       {:ex_machina, "~> 2.3", only: :test},
+      {:rollbax, ">= 0.10.0"},
+      {:logger_file_backend, "~> 0.0.10"},
       {:ext, git: "https://github.com/outcastby/ext.git"}
     ]
   end

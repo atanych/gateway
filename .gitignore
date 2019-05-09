@@ -35,3 +35,4 @@ gateway-*.tar
 # variables.
 /config/*.secret.exs
 .env
+log

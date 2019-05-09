@@ -3,7 +3,7 @@ defmodule GatewayWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Plugs.Params
+    plug Ext.Plugs.Params
   end
 
   scope "/" do

@@ -4,7 +4,7 @@ defmodule Sdk.Telegram.Client do
   require IEx
   require Logger
 
-  def get_file_url_by_id(nil, token), do: nil
+  def get_file_url_by_id(nil, _token), do: nil
 
   def get_file_url_by_id(file_id, token) do
     request = %Ext.Sdk.Request{payload: %{file_id: file_id, limit: 1}, options: %{url_params: token}}

@@ -15,6 +15,10 @@ defmodule Sdk.Telegram.Config do
         get_file: %{
           type: :get,
           url: fn token -> "/bot#{token}/getFile" end
+        },
+        send_message: %{
+          type: :post,
+          url: fn token -> "/bot#{token}/sendMessage" end
         }
       }
     }
