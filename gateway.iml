@@ -123,5 +123,7 @@
     <orderEntry type="library" name="sweet_xml" level="project" />
     <orderEntry type="library" name="bypass" level="project" />
     <orderEntry type="library" name="arc_ecto" level="project" />
+    <orderEntry type="library" name="rollbax" level="project" />
+    <orderEntry type="library" name="logger_file_backend" level="project" />
   </component>
 </module>
