@@ -24,16 +24,17 @@ config :logger, :console,
 
 # Use custom reporter because errors not sending in rollbar (see RollbaxReporter method for "Common error")
 config :rollbax,
-       access_token: "f4207c6bf02b4f57b5eae8141cab49c3",
-       environment: System.get_env("MIX_ENV"),
-       enabled: System.get_env("ENABLE_ROLLBAR") == "true",
-         #       reporters: [Rollbar.Reporter], # For use in rollbax custom reporter
-       enable_crash_reports: true
+  access_token: "f4207c6bf02b4f57b5eae8141cab49c3",
+  environment: System.get_env("MIX_ENV"),
+  enabled: System.get_env("ENABLE_ROLLBAR") == "true",
+  #       reporters: [Rollbar.Reporter], # For use in rollbax custom reporter
+  enable_crash_reports: true
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-import_config "logger.exs"
+logger_file = "deps/ext/lib/ext/logger/config.exs"
+if File.exists?(logger_file), do: import_config("../#{logger_file}")
 
 case Mix.env() do
   :test -> import_config "test.exs"

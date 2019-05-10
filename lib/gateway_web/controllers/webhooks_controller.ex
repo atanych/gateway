@@ -11,7 +11,8 @@ defmodule WebhooksController do
     apply(Phoenix.Controller, format, [conn, body])
   end
 
-  def outbox(_conn, params) do
+  def outbox(conn, params) do
     Outbox.Process.call(params)
+    json(conn, %{status: :ok})
   end
 end

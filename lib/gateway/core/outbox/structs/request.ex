@@ -1,6 +1,6 @@
 defmodule Outbox.Structs.Request do
   @derive Jason.Encoder
-  defstruct id: nil, text: nil, attachments: [], buttons: [], extra: nil
+  defstruct id: nil, text: nil, attachments: [], extra: nil
   require IEx
 
   def init(%{transport: transport} = context, params) do
@@ -9,7 +9,7 @@ defmodule Outbox.Structs.Request do
     extra =
       case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.Outbox.Structs.Extra") do
         nil -> nil
-        module -> struct(module, params[:extra])
+        module -> module.init(params[:extra])
       end
 
     {context, %{struct | extra: extra}}

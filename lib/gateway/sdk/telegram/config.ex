@@ -19,6 +19,22 @@ defmodule Sdk.Telegram.Config do
         send_message: %{
           type: :post,
           url: fn token -> "/bot#{token}/sendMessage" end
+        },
+        send_photo: %{
+          type: :post,
+          url: fn token -> "/bot#{token}/sendPhoto" end
+        },
+        send_audio: %{
+          type: :post,
+          url: fn token -> "/bot#{token}/sendAudio" end
+        },
+        send_video: %{
+          type: :post,
+          url: fn token -> "/bot#{token}/sendVideo" end
+        },
+        send_document: %{
+          type: :post,
+          url: fn token -> "/bot#{token}/sendDocument" end
         }
       }
     }

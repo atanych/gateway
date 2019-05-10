@@ -6,8 +6,13 @@ defmodule Transports.Telegram.Outbox.SendTest do
       with_mock Sdk.Telegram.Client, send_message: fn _ -> {:ok, %{}} end do
         device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
 
-        response = Transports.Telegram.Outbox.Send.call({%{device: device}, %{text: "aaa"}}, ["89388434"])
-        assert response == {:ok, %{}}
+        response =
+          Transports.Telegram.Outbox.Send.call(
+            {%{device: device}, %{text: "aaa", attachments: [], extra: %{keyboard: %{buttons: []}}}},
+            ["89388434"]
+          )
+
+        assert response == {:ok, :nth}
       end
     end
   end
@@ -16,8 +21,13 @@ defmodule Transports.Telegram.Outbox.SendTest do
     with_mock Sdk.Telegram.Client, send_message: fn _ -> {:error, %{reason: "INVALID TOKEN"}} end do
       device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
 
-      response = Transports.Telegram.Outbox.Send.call({%{device: device}, %{text: "aaa"}}, ["89388434"])
-      assert response == {:error, %{reason: "INVALID TOKEN"}}
+      response =
+        Transports.Telegram.Outbox.Send.call(
+          {%{device: device}, %{text: "aaa", attachments: [], extra: %{keyboard: %{buttons: []}}}},
+          ["89388434"]
+        )
+
+      assert response == {:error, [error: %{reason: "INVALID TOKEN"}]}
     end
   end
 end

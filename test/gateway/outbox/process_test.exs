@@ -11,7 +11,7 @@ defmodule Outbox.ProcessTest do
         id: "aser2r-0296-47eb-b86e-d45acd0e788",
         text: "Hello Guys",
         attachments: [],
-        extra: %{test: 11, buttons: []}
+        extra: %{keyboard: %{buttons: []}}
       },
       chat_ids: ["vbp/jpDfwqU13FdiJSt0WnTSTA==", "vbp/wAH/iUrD+rHAocQ8VQQhUg=="]
     }

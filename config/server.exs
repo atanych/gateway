@@ -14,7 +14,6 @@ config :gateway, GatewayWeb.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
