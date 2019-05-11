@@ -6,12 +6,6 @@ defmodule Outbox.Structs.Request do
   def init(%{transport: transport} = context, params) do
     struct = struct(__MODULE__, params)
 
-    extra =
-      case Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.Outbox.Structs.Extra") do
-        nil -> nil
-        module -> module.init(params[:extra])
-      end
-
-    {context, %{struct | extra: extra}}
+    {context, %{struct | extra: Outbox.Structs.Extra.init(params[:extra])}}
   end
 end

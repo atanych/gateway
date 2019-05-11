@@ -8,7 +8,7 @@ defmodule Gateway.Repo.Migrations.CreateOutboxEvents do
       add(:data, :map)
       add(:chat_ids, :map)
       add(:external_id, :string)
-      add(:meta, :string)
+      add(:meta, :text)
       add(:status, :smallint, default: 0)
 
       timestamps(type: :timestamptz)

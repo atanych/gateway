@@ -7,6 +7,14 @@ defmodule Sdk.ViberPublic.Config do
         set_webhook: %{
           type: :post,
           url: "/set_webhook"
+        },
+        send_message: %{
+          type: :post,
+          url: "/send_message"
+        },
+        broadcast_message: %{
+          type: :post,
+          url: "/broadcast_message"
         }
       }
     }

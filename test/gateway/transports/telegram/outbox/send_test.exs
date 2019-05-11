@@ -8,11 +8,11 @@ defmodule Transports.Telegram.Outbox.SendTest do
 
         response =
           Transports.Telegram.Outbox.Send.call(
-            {%{device: device}, %{text: "aaa", attachments: [], extra: %{keyboard: %{buttons: []}}}},
-            ["89388434"]
+            %{device: device},
+            [{:send_message, %{text: "aaa", chat_id: "ddd"}}]
           )
 
-        assert response == {:ok, :nth}
+        assert response == [{:ok, %{}}]
       end
     end
   end
@@ -22,12 +22,9 @@ defmodule Transports.Telegram.Outbox.SendTest do
       device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
 
       response =
-        Transports.Telegram.Outbox.Send.call(
-          {%{device: device}, %{text: "aaa", attachments: [], extra: %{keyboard: %{buttons: []}}}},
-          ["89388434"]
-        )
+        Transports.Telegram.Outbox.Send.call(%{device: device}, [{:send_message, %{text: "aaa", chat_id: "ddd"}}])
 
-      assert response == {:error, [error: %{reason: "INVALID TOKEN"}]}
+      assert response == [{:error, %{reason: "INVALID TOKEN"}}]
     end
   end
 end

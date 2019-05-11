@@ -14,7 +14,7 @@ defmodule Transports.Telegram.Outbox.PreparePackagesTest do
         }
       }
 
-      response = Transports.Telegram.Outbox.PreparePackages.call(request, "4sfsf4")
+      response = Transports.Telegram.Outbox.PreparePackages.call(request, ["4sfsf4"])
 
       assert response == [
                {:send_message,
@@ -42,7 +42,7 @@ defmodule Transports.Telegram.Outbox.PreparePackagesTest do
         }
       }
 
-      response = Transports.Telegram.Outbox.PreparePackages.call(request, "4sfsf4")
+      response = Transports.Telegram.Outbox.PreparePackages.call(request, ["4sfsf4"])
 
       assert response == [
                {:send_photo,
@@ -75,7 +75,7 @@ defmodule Transports.Telegram.Outbox.PreparePackagesTest do
         }
       }
 
-      response = Transports.Telegram.Outbox.PreparePackages.call(request, "4sfsf4")
+      response = Transports.Telegram.Outbox.PreparePackages.call(request, ["4sfsf4"])
 
       assert response == [
                {:send_document,

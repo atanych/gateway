@@ -1,7 +1,7 @@
 defmodule Transports.Telegram.Outbox.PreparePackages do
   use BaseCommand
 
-  def call(request, chat_id) do
+  def call(request, [chat_id]) do
     collect([], request, chat_id)
   end
 
