@@ -1,7 +1,7 @@
 defmodule Inbox.Structs.UnifiedRequest.Chat do
   @derive Jason.Encoder
 
-  defstruct(id: nil, title: nil, type: "private")
+  defstruct(id: nil, title: nil, type: "private", status: nil)
 end
 
 defmodule Inbox.Structs.UnifiedRequest.Client do

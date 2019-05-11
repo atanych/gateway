@@ -15,6 +15,24 @@ defmodule Transports.ViberPublic.Inbox.UnifyRequestTest do
     assert unified_request.event_type == "confirm_hook"
   end
 
+  test "status" do
+    request = %{
+      chat_hostname: "SN-CHAT-07_",
+      device_uniq_key: "bbb",
+      event: "seen",
+      message_token: 5_308_078_978_985_525_155,
+      sig: "5cd38788cc48f48caeceb5a5cde219ac1761004303fa8b385162f971627d2da0",
+      timestamp: 1_557_602_450_529,
+      transport: "viber_public",
+      user_id: "wAH/iUrD+rHAocQ8VQQhUg=="
+    }
+
+    unified_request = Transports.ViberPublic.Inbox.UnifyRequest.call(request)
+    assert unified_request.event_type == "change_status"
+    assert unified_request.chat.id == "wAH/iUrD+rHAocQ8VQQhUg=="
+    assert unified_request.chat.status == "seen"
+  end
+
   test "message" do
     request = %{
       chat_hostname: "SN-CHAT-04_",

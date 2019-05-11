@@ -3,6 +3,14 @@ defmodule Transports.ViberPublic.Inbox.UnifyRequest do
 
   def call(%{event: "webhook"}), do: Inbox.Structs.UnifiedRequest.init(%{event_type: "confirm_hook"})
 
+  def call(%{event: "seen", user_id: user_id}) do
+    Inbox.Structs.UnifiedRequest.init(%{
+      event_type: "change_status",
+      chat: %{id: user_id, status: "seen"},
+      client: %{id: user_id}
+    })
+  end
+
   def call(%{message: message, sender: sender, message_token: message_token} = params) do
     Inbox.Structs.UnifiedRequest.init(%{
       event_type: "send_inbox",

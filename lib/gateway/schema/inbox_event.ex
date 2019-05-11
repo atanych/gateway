@@ -2,7 +2,7 @@ defmodule InboxEvent do
   require Logger
   use Gateway.Schema.Base
   defenum StatusEnum, new: 0, sent: 1, failed: 2
-  defenum TypeEnum, send_inbox: 0, update_inbox: 1, confirm_hook: 2
+  defenum TypeEnum, send_inbox: 0, update_inbox: 1, confirm_hook: 2, change_status: 3
 
   schema "inbox_events" do
     belongs_to :device, Device
