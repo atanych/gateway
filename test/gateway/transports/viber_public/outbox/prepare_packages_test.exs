@@ -141,42 +141,48 @@ defmodule Transports.ViberPublic.Outbox.PreparePackagesTest do
     end
 
     test "with 2 attachments" do
-      request = %{
-        attachments: [
-          "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.pdf",
-          "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp4"
-        ],
-        text: "AAAA",
-        extra: %{
-          keyboard: %{
-            buttons: [],
-            one_time: true
+      with_mock Attachments.GetInfoByUrl, call: fn _ -> %{length: 100, ext: "pdf"} end do
+        request = %{
+          attachments: [
+            %{url: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.pdf", name: "tachka"},
+            %{url: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp4", name: nil}
+          ],
+          text: "AAAA",
+          extra: %{
+            keyboard: %{
+              buttons: [],
+              one_time: true
+            }
           }
         }
-      }
 
-      response = Transports.ViberPublic.Outbox.PreparePackages.call(request, ["4sfsf4"])
+        response = Transports.ViberPublic.Outbox.PreparePackages.call(request, ["4sfsf4"])
 
-      assert response == [
-               {:send_message,
-                %{
-                  receiver: "4sfsf4",
-                  media: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.pdf",
-                  type: "file"
-                }},
-               {:send_message,
-                %{
-                  receiver: "4sfsf4",
-                  type: "video",
-                  media: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp4"
-                }},
-               {:send_message,
-                %{
-                  receiver: "4sfsf4",
-                  text: "AAAA",
-                  type: "text"
-                }}
-             ]
+        assert response == [
+                 {:send_message,
+                  %{
+                    receiver: "4sfsf4",
+                    media: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.pdf",
+                    file_name: "tachka.pdf",
+                    size: 100,
+                    type: "file"
+                  }},
+                 {:send_message,
+                  %{
+                    receiver: "4sfsf4",
+                    type: "video",
+                    file_name: "unknown.pdf",
+                    size: 100,
+                    media: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp4"
+                  }},
+                 {:send_message,
+                  %{
+                    receiver: "4sfsf4",
+                    text: "AAAA",
+                    type: "text"
+                  }}
+               ]
+      end
     end
   end
 end

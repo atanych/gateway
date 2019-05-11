@@ -10,7 +10,7 @@ defmodule Transports.Telegram.Outbox.PreparePackages do
   end
 
   def collect(packages, %{attachments: [attachment], text: text, extra: %{keyboard: keyboard}}, chat_id) do
-    attachment_type = Attachments.GetFileTypeByPath.call(attachment)
+    attachment_type = Attachments.GetFileTypeByPath.call(attachment.url)
     body_key = get_body_key_by_attachment_type(attachment_type)
 
     packages ++
@@ -19,7 +19,7 @@ defmodule Transports.Telegram.Outbox.PreparePackages do
          %{chat_id: chat_id}
          |> fill_reply_markup(keyboard)
          |> fill_caption(text)
-         |> Map.merge(%{body_key => attachment})}
+         |> Map.merge(%{body_key => attachment.url})}
       ]
   end
 

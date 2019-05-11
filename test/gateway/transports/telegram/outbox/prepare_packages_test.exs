@@ -32,7 +32,7 @@ defmodule Transports.Telegram.Outbox.PreparePackagesTest do
 
     test "attachments size == 1" do
       request = %{
-        attachments: ["https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.jpeg"],
+        attachments: [%{url: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.jpeg"}],
         text: "AAAA",
         extra: %{
           keyboard: %{
@@ -62,9 +62,9 @@ defmodule Transports.Telegram.Outbox.PreparePackagesTest do
     test "attachments size == 3" do
       request = %{
         attachments: [
-          "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.pdf",
-          "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp4",
-          "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp3"
+          %{url: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.pdf"},
+          %{url: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp4"},
+          %{url: "https://content.onliner.by/news/970x485/27f19fa1286bd43196ce9aefa83224e4.mp3"}
         ],
         text: "AAAA",
         extra: %{
