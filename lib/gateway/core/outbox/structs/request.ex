@@ -9,7 +9,10 @@ defmodule Outbox.Structs.Request do
 
   def init(%{transport: transport} = context, params) do
     struct = struct(__MODULE__, params)
-    attachments = Enum.map(params.attachments, fn attachment -> struct(Outbox.Structs.Attachment, attachment) end)
-    {context, %{struct | attachments: attachments, extra: Outbox.Structs.Extra.init(params[:extra])}}
+
+    attachments =
+      Enum.map(params[:attachments] || [], fn attachment -> struct(Outbox.Structs.Attachment, attachment) end)
+
+    {context, %{struct | attachments: attachments, extra: Outbox.Structs.Extra.init(params[:extra] || %{})}}
   end
 end

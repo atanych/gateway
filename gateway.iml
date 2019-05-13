@@ -126,5 +126,8 @@
     <orderEntry type="library" name="arc_ecto" level="project" />
     <orderEntry type="library" name="rollbax" level="project" />
     <orderEntry type="library" name="logger_file_backend" level="project" />
+    <orderEntry type="library" name="absinthe_ecto" level="project" />
+    <orderEntry type="library" name="absinthe_phoenix" level="project" />
+    <orderEntry type="library" name="absinthe_plug" level="project" />
   </component>
 </module>
