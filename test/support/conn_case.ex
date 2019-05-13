@@ -23,6 +23,7 @@ defmodule GatewayWeb.ConnCase do
       import Factories.Gateway.Base
       require IEx
       import Mock
+      import GatewayWeb.Helpers.Graphql
       # The default endpoint for testing
       @endpoint GatewayWeb.Endpoint
     end

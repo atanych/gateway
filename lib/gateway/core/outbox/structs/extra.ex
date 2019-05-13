@@ -24,7 +24,7 @@ defmodule Outbox.Structs.Extra do
   def init(params) do
     struct(
       __MODULE__,
-      params ||| %{keyboard: Keyboard.init(params[:keyboard])}
+      params ||| %{keyboard: Keyboard.init(params[:keyboard] || %{})}
     )
   end
 end

@@ -13,7 +13,7 @@ defmodule Transports.ViberPublic.Outbox.SendTest do
     end
 
     test "broadcast message" do
-      with_mock Sdk.ViberPublic.Client, broadcast_message: fn _ -> {:ok, %{}} end do
+      with_mock Sdk.ViberPublic.Client, broadcast_message: fn _ -> {:ok, %{"status" => 0}} end do
         device = build(:device, settings: %{"token" => "499e3b7926e7d3d4-d1aa119865ef879c-63c8850708d82d10"})
 
         Transports.ViberPublic.Outbox.Send.call(%{device: device}, [
