@@ -1,0 +1,81 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version here
+      - image: circleci/elixir:1.8
+        environment:  # environment variables for primary container
+          MIX_ENV: test
+          REDIS_URL: 127.0.0.1
+          DOCKER_USER: tsgci
+          DOCKER_PASS: j4IrJa
+          INTERNAL_TOKEN: zHjjMM1OH5-zpDDQESDwlWRE90YSh-kJzm9-yNj-oQyffUVvQfhQzzAECU1g2urZ3mc
+          ROOT_URL: https://be036e6e.ngrok.io
+          STORAGE_URL: http://localhost:4001
+          GOOGLE_CLIENT_ID: 972986191337-ja4lbjdjlife0r46davk3lb2ovdm72t2.apps.googleusercontent.com
+
+      - image: circleci/postgres:9.6.5-alpine-ram
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: arcade_test
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+      - image: redis
+
+    steps:
+      - checkout
+      - run: curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+      - run: sudo apt install nodejs
+
+      # Prepare DB connection info
+      - run: cp config/test.ci.exs config/test.exs
+      - run: sudo apt install -y postgresql-client || true
+
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix deps.get
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+#            - v4-npm-dependencies-{{ checksum "assets/package.json" }}
+            - v4-npm-dependencies-
+
+#      - run: cd assets && npm install
+
+#      - run:
+#          name: Check commit message
+#          command: assets/node_modules/@commitlint/cli/src/cli.js --from=HEAD~1
+
+      - run:
+          name: Check by formatter
+          command: mix format --check-formatted
+
+#      - save_cache:
+#          key: v4-npm-dependencies-{{ checksum "assets/package.json" }}
+#          paths:
+#            - assets/node_modules
+
+      - run: mix test
+
+      # Start docker
+      - setup_remote_docker:
+          version: 17.05.0-ce
+
+      # build and push Docker image
+      - run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      # Deploy
+      - run: echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list
+      - run: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+      - run: sudo apt-get update
+      - run: sudo apt-get install ansible
+      - run: sudo apt-get install python-pip
+      - run: sudo apt-get update && sudo apt-get install -y apt-transport-https
+      - run: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+      - run: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y kubectl
+#      - run: mix ext.handle_commit

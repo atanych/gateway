@@ -47,7 +47,6 @@ defmodule Gql.Real.OutboxEvents.MutationTest do
       assert outbox_event.device_id == "82ac1164-7e7d-4f1e-b161-ee3005d65f02"
       assert outbox_event.external_id == "aser2r-0296-47eb-b86e-d45acd0e788"
       assert outbox_event.status == :sent
-
     end
   end
 end
