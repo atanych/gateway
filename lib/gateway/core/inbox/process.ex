@@ -1,10 +1,8 @@
 defmodule Inbox.Process do
   use BaseCommand
 
-  def call(%{transport: transport} = request) do
+  def call(%{transport: _transport} = request) do
     if Inbox.IsValidRequest.call(request) do
-      IEx.pry()
-
       request
       |> Inbox.UnifyRequest.call()
       |> Inbox.Structs.Context.init()

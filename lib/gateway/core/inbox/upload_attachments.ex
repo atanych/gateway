@@ -21,7 +21,7 @@ defmodule Inbox.UploadAttachments do
   end
 
   def upload_reply({context, %{reply: reply}}) when not is_nil(reply) do
-    {context, reply} = __MODULE__.call({context, reply})
+    {_context, reply} = __MODULE__.call({context, reply})
     reply
   end
 

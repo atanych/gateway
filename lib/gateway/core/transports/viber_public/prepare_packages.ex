@@ -32,7 +32,7 @@ defmodule Transports.ViberPublic.Outbox.PreparePackages do
   def fill_caption(package, nil), do: package
   def fill_caption(package, caption), do: package ||| %{caption: caption}
 
-  def fill_size(package, attachment, :image), do: package
+  def fill_size(package, _attachment, :image), do: package
 
   def fill_size(package, attachment, _attachment_type) do
     response = Attachments.GetInfoByUrl.call(attachment.url)

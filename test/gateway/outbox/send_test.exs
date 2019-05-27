@@ -6,7 +6,7 @@ defmodule Outbox.SendTest do
     event_2 = insert(:outbox_event, chat_ids: ["ddddd"])
 
     with_mock Transports.Telegram.Outbox.Send, call: fn _, _ -> [{:ok, %{}}] end do
-      device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
+      _device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
 
       Outbox.Send.call(
         {%{events: [event_1, event_2], transport: "telegram"},
@@ -24,7 +24,7 @@ defmodule Outbox.SendTest do
     event = insert(:outbox_event, chat_ids: ["ddddd"])
 
     with_mock Transports.Telegram.Outbox.Send, call: fn _, _ -> [{:error, %{reason: "INVALID TOKEN"}}] end do
-      device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
+      _device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
 
       Outbox.Send.call(
         {%{events: [event], transport: "telegram"}, %{text: "aaa", attachments: [], extra: %{keyboard: %{buttons: []}}}}

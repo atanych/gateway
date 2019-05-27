@@ -14,11 +14,13 @@ defmodule OutboxEvent do
     timestamps()
   end
 
+  def changeset(struct, params \\ %{})
+
   def changeset(struct, %{external_id: external_id} = params) when is_number(external_id) do
     changeset(struct, params ||| %{external_id: Ext.Utils.Base.to_str(params[:external_id])})
   end
 
-  def changeset(struct, params \\ %{}) do
+  def changeset(struct, params) do
     struct
     |> cast(params, [:external_id, :data, :status, :device_id, :chat_ids, :meta])
   end

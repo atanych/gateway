@@ -7,7 +7,7 @@ defmodule Outbox.Structs.Request do
   defstruct id: nil, text: nil, attachments: [], extra: nil
   require IEx
 
-  def init(%{transport: transport} = context, params) do
+  def init(%{transport: _transport} = context, params) do
     struct = struct(__MODULE__, params)
 
     attachments =

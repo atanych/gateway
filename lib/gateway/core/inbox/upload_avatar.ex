@@ -15,7 +15,7 @@ defmodule Inbox.UploadAvatar do
     end
   end
 
-  def put_to_storage(%{url: url}, {%{device: device}, client_request}) when not is_nil(url) do
+  def put_to_storage(%{url: url}, {%{device: device}, _client_request}) when not is_nil(url) do
     Storage.PutAttachment.call(%{url: url}, "avatar", device.company_id)
   end
 

@@ -1,7 +1,7 @@
 defmodule Outbox.Send do
   use BaseCommand
 
-  def call({%{events: events, transport: transport} = context, request} = args) do
+  def call({%{events: events, transport: transport} = context, _request} = args) do
     Enum.each(events, fn event ->
       module = Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.Outbox.Send")
       packages = prepare_packages(args, event.chat_ids)
@@ -18,7 +18,7 @@ defmodule Outbox.Send do
     args
   end
 
-  def prepare_packages({%{events: events, transport: transport}, request} = args, chat_ids) do
+  def prepare_packages({%{events: _events, transport: transport}, request} = _args, chat_ids) do
     module = Ext.Utils.Base.to_existing_atom("Elixir.Transports.#{Macro.camelize(transport)}.Outbox.PreparePackages")
     module.call(request, chat_ids)
   end
