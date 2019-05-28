@@ -6,5 +6,8 @@ defmodule Gql.Types do
   import_types(Ext.Gql.Types.Scalar.Json)
   import_types(Ext.Gql.Types.Scalar.DateTime)
   import_types(Ext.Gql.Types.Scalar.Date)
-  import_types(Gql.Real.OutboxEvents.Mutation)
+  import_types(Ext.Gql.Types.Scalar.UUID)
+  import_types(Gql.OutboxEvents.Mutation)
+  import_types(Gql.Devices.Query)
+  import_types(Gql.Devices.Mutation)
 end

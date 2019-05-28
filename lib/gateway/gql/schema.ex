@@ -13,5 +13,6 @@ defmodule Gql.Schema do
 
   mutation do
     import_fields(:outbox_event_mutations)
+    import_fields(:device_mutations)
   end
 end

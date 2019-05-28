@@ -1,4 +1,4 @@
-defmodule Gql.Real.OutboxEvents.Resolver do
+defmodule Gql.OutboxEvents.Resolver do
   require IEx
 
   def send(args, _info) do

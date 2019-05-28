@@ -15,6 +15,10 @@ defmodule Sdk.ViberPublic.Config do
         broadcast_message: %{
           type: :post,
           url: "/broadcast_message"
+        },
+        get_account_info: %{
+          type: :get,
+          url: "/get_account_info"
         }
       }
     }

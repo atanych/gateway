@@ -1,4 +1,4 @@
-defmodule Gql.Real.OutboxEvents.Mutation do
+defmodule Gql.Devices.Mutation do
   use Absinthe.Schema.Notation
 
   input_object :outbox_attachment_params do
@@ -26,13 +26,11 @@ defmodule Gql.Real.OutboxEvents.Mutation do
     field :attachments, list_of(:outbox_attachment_params)
   end
 
-  object :outbox_event_mutations do
-    @desc "Send outbox"
-    field :send_outbox_event, type: :string do
-      arg :chat_ids, non_null(list_of(:string))
-      arg :device_id, non_null(:string)
-      arg :event, non_null(:outbox_event_params)
-      resolve &Gql.Real.OutboxEvents.Resolver.send/2
+  object :device_mutations do
+    @desc "Connect device"
+    field :connect_device, type: :device do
+      arg :id, non_null(:uuid)
+      resolve &Gql.Devices.Resolver.connect/2
     end
   end
 end

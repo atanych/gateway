@@ -129,5 +129,8 @@
     <orderEntry type="library" name="absinthe_ecto" level="project" />
     <orderEntry type="library" name="absinthe_phoenix" level="project" />
     <orderEntry type="library" name="absinthe_plug" level="project" />
+    <orderEntry type="library" name="ja_serializer" level="project" />
+    <orderEntry type="library" name="inflex" level="project" />
+    <orderEntry type="library" name="scrivener" level="project" />
   </component>
 </module>

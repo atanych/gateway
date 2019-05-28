@@ -51,7 +51,8 @@ defmodule Gateway.MixProject do
       {:ex_machina, "~> 2.3", only: :test},
       {:rollbax, ">= 0.10.0"},
       {:logger_file_backend, "~> 0.0.10"},
-      {:ext, git: "https://github.com/outcastby/ext.git"}
+      {:ext, git: "https://github.com/outcastby/ext.git"},
+      {:ja_serializer, "~> 0.13.0"}
     ]
   end
 
