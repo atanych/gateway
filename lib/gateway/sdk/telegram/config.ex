@@ -8,6 +8,10 @@ defmodule Sdk.Telegram.Config do
           type: :post,
           url: fn token -> "/bot#{token}/setWebhook" end
         },
+        get_me: %{
+          type: :get,
+          url: fn token -> "/bot#{token}/getMe" end
+        },
         get_user_profile_photos: %{
           type: :post,
           url: fn token -> "/bot#{token}/getUserProfilePhotos" end
