@@ -3,7 +3,7 @@ defmodule Transports.Telegram.Subscribe do
 
   def call(device) do
     case set_webhook(device) do
-      {:ok, _} -> fill_device_info(device)
+      {:ok, _} -> {:ok, fill_device_info(device)}
       {:error, message} -> {:error, message}
     end
   end

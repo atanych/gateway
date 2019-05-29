@@ -18,7 +18,7 @@ defmodule Transports.Telegram.SubscribeTest do
       set_webhook: fn _ -> {:ok, %{}} end do
       device = build(:device, settings: %{"token" => "829411875:AAGCZ9-rDZzX_r5Vak86g7y0uQnrKIZzvvs"})
 
-      %{settings: settings} = Transports.Telegram.Subscribe.call(device)
+      {:ok, %{settings: settings}} = Transports.Telegram.Subscribe.call(device)
       assert settings["name"] == "my_bot"
       assert settings["url"] =~ "https://t.me/my_bot"
     end

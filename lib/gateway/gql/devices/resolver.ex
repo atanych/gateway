@@ -7,8 +7,13 @@ defmodule Gql.Devices.Resolver do
     device = Gateway.Repo.get!(Device, id)
 
     case Devices.Subscribe.call(device) do
-      {:error, _a} -> {:error, :invalid_data}
-      device -> {:ok, device}
+      {:error, _a} ->
+        {:error, :invalid_data}
+
+      {:ok, %{settings: settings}} ->
+        device = Gateway.Repo.save!(device, %{settings: settings})
+
+        {:ok, device}
     end
   end
 end

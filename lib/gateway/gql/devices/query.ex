@@ -8,5 +8,6 @@ defmodule Gql.Devices.Query do
     field :transport, :string
     field :settings, :json
     field :status, :string
+    field :account_id, :uuid
   end
 end

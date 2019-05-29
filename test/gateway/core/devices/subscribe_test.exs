@@ -57,7 +57,7 @@ defmodule Devices.SubscribeTest do
           settings: %{"token" => "499e3b7926e7d3d4-d1aa119865ef879c-63c8850708d82d10"}
         )
 
-      %{settings: settings} = Devices.Subscribe.call(device)
+      {:ok, %{settings: settings}} = Devices.Subscribe.call(device)
       assert settings["name"] == "Vadesk.io"
       assert settings["url"] =~ "viber://pa?chatURI=testc4d"
     end

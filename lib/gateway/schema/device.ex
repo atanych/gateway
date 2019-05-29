@@ -1,6 +1,7 @@
 defmodule Device do
   require Logger
   use Gateway.Schema.Base
+  defenum StatusEnum, inactive: 0, active: 1
 
   defenum TransportEnum,
     sms: 1,
@@ -17,8 +18,10 @@ defmodule Device do
 
   schema "devices" do
     field(:transport, TransportEnum)
+    field(:status, StatusEnum)
     field(:settings, :map)
     field(:company_id, :binary_id)
+    field(:account_id, :binary_id)
     field(:uniq_key, :string)
     timestamps()
   end
