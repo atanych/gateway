@@ -5,10 +5,7 @@ defmodule Transports.ViberPublic.Outbox.Send do
     Enum.map(packages, fn {method, payload} ->
       request = %Ext.Sdk.Request{payload: payload, headers: ["X-Viber-Auth-Token": token]}
 
-      case apply(Sdk.ViberPublic.Client, method, [request]) do
-        {:ok, %{"status" => 0} = response} -> {:ok, response}
-        {_, response} -> {:error, response}
-      end
+      apply(Sdk.ViberPublic.Client, method, [request])
     end)
   end
 end
