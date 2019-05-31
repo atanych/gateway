@@ -12,6 +12,6 @@ defmodule Gateway.Repo.Migrations.CreateDevices do
       timestamps(type: :timestamptz)
     end
 
-    create(unique_index(:devices, [:transport, :uniq_key]))
+    create(unique_index(:devices, [:uniq_key, :transport]))
   end
 end
