@@ -9,6 +9,7 @@ defmodule InboxEvent do
     belongs_to :client, Client
     field :external_id, :string
     field :data, :map
+    field :meta, :string
     field :status, StatusEnum
     field :type, TypeEnum
 
@@ -23,6 +24,6 @@ defmodule InboxEvent do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:external_id, :data, :status, :type, :device_id, :client_id])
+    |> cast(params, [:external_id, :data, :status, :type, :device_id, :client_id, :meta])
   end
 end
