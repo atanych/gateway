@@ -3,6 +3,7 @@ defmodule Inbox.SaveClient do
 
   def call({%{client: nil} = context, %{client: client, transport: transport} = request}) do
     request = %{request | client: Inbox.UploadAvatar.call({context, client}, transport)}
+
     # fetch avatar
     client =
       Gateway.Repo.save!(%Client{}, %{

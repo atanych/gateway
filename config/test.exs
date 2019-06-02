@@ -15,4 +15,6 @@ config :ex_unit, assert_receive_timeout: 400
 config :gateway, Gateway.Repo,
   database: "gateway_test",
   hostname: "localhost",
+  username: "postgres",
+  password: "postgres",
   pool: Ecto.Adapters.SQL.Sandbox

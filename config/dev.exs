@@ -47,5 +47,7 @@ config :phoenix, :plug_init_mode, :runtime
 # Configure your database
 config :gateway, Gateway.Repo,
   database: "gateway_dev",
+  username: "postgres",
+  password: "postgres",
   hostname: "localhost",
   pool_size: 10
