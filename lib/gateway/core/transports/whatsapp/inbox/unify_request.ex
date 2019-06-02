@@ -5,18 +5,14 @@ defmodule Transports.Whatsapp.Inbox.UnifyRequest do
   #   do: call(params ||| %{message: edited_message, edited_message: nil})
 
   def call(%{messages: _messages, transport: _transport} = params) do
-    message = List.first(params.messages)
-
     params
     |> init_request()
-    |> fill_attachments(message)
-    |> fill_contact(message)
-    |> fill_location(message)
+    |> fill_attachments(params)
+    |> fill_contact(params)
+    |> fill_location(params)
   end
 
-  def init_request(%{messages: messages, transport: transport}) do
-    message = List.first(messages)
-
+  def init_request(%{messages: [message], transport: transport}) do
     Inbox.Structs.UnifiedRequest.init(%{
       chat: %{
         id: Ext.Utils.Base.to_str(message[:chat_id]),
@@ -31,25 +27,24 @@ defmodule Transports.Whatsapp.Inbox.UnifyRequest do
       },
       message: %{
         id: message[:id],
-        text: message[:body] || message[:caption],
-        location: "en"
+        text: message[:body] || message[:caption]
       },
       event_type: "send_inbox"
     })
   end
 
-  def fill_location(request, message) do
+  def fill_location(request, %{messages: [message]}) do
     case message.type do
       "location" ->
-        lat_lon = String.split(message.body, ";")
-        %{request | message: %{request.message | location: %{lat: List.first(lat_lon), lon: List.last(lat_lon)}}}
+        [lat, lon] = String.split(message.body, ";")
+        %{request | message: %{request.message | location: %{lat: lat, lon: lon}}}
 
       _ ->
         request
     end
   end
 
-  def fill_contact(request, message) do
+  def fill_contact(request, %{messages: [message]}) do
     cond do
       message.type == "vcard" ->
         Inbox.Structs.UnifiedRequest.add_contact(request, %{
@@ -65,7 +60,7 @@ defmodule Transports.Whatsapp.Inbox.UnifyRequest do
 
   # Enum = ["chat", "image", "ptt", "document", "audio", "video", "location", "call_log"]
   # ptt - voice message
-  def fill_attachments(request, message) do
+  def fill_attachments(request, %{messages: [message]}) do
     cond do
       message.type in ["image", "document", "audio", "video", "ptt"] ->
         Inbox.Structs.UnifiedRequest.add_attachment(

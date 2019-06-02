@@ -10,6 +10,10 @@ defmodule Inbox.IsValidRequestTest do
       assert Inbox.IsValidRequest.call(%{event: "message", transport: "viber_public"})
     end
 
+    test "whatsapp" do
+      assert Inbox.IsValidRequest.call(%{messages: [%{body: "message"}], transport: "whatsapp"})
+    end
+
     test "livechat" do
       assert Inbox.IsValidRequest.call(%{transport: "livechat"})
     end
